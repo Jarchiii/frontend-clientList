@@ -21,6 +21,8 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import AddIcon from '@material-ui/icons/Add';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import Axios from 'axios'
 
 
@@ -67,23 +69,50 @@ export default withRouter(function AddClient(props) {
     genre : ""
   })
 
+
+  const [addressChoice, setAddressChoice] = useState(["Paris"])
+  const [uploadData, setUpload] = useState(null);
+
+
+  const handleFileUpload = e => {
+    console.log("The file to be uploaded is: ", e.target.files[0]);
+    setUpload(e.target.files[0]);
+  }
+
   const handleChange = e => {
     console.log({ [e.target.name] : e.target.value });
     setUser({
       ...user,
       [e.target.name] : e.target.value
     });
+  
+
+    
     console.log(user);
+    Axios
+     .get(`https://api-adresse.data.gouv.fr/search/?q=${user.address}&limit=15`)
+     .then(apiRes => {
+      console.log(apiRes.data.features)
+      const choice = []
+      apiRes.data.features.map(element => choice.push(element.properties.label))
+      setAddressChoice(choice)
+      console.log("choix d'adresse", addressChoice)
+  })
+  .catch(apiErr => console.log("GROS FAIL... ", apiErr))
   };
 
 
+ const handleClickAutocomplete = e => {
+    const address = e.target.value
+    console.log("click", address)
+    e.preventDefault();
 
-  Axios
-  .get("https://api-adresse.data.gouv.fr/search/?q=rue+roger+salengros+montrouge")
-  .then(apiRes => {
-      console.log(apiRes)
-  })
-  .catch(apiErr => console.log("GROS FAIL... ", apiErr))
+    setUser({
+        ...user,
+        [e.target.name]  : address
+      })
+ }
+ 
 
 
 
@@ -156,16 +185,23 @@ export default withRouter(function AddClient(props) {
             </Grid>
            
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="address"
-                label="Address"
-                type="address"
-                id="address"
-            
-                autoComplete="current-address"
+            <Autocomplete 
+                    id="combo-box-demo"
+                    options={addressChoice}
+                    getOptionLabel={(option) => option}
+                    style={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params}
+                    onClick={handleClickAutocomplete}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="address"
+                    label="Address"
+                    type="address"
+                    id="address"
+                   autoComplete="current-address"
+
+              />}
               />
             </Grid>
             
@@ -179,6 +215,19 @@ export default withRouter(function AddClient(props) {
           >
             Add Client
           </Button>
+          
+        
+        </form>
+        <input
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            type="file"
+            onChange={handleFileUpload}
+            className={classes.submit}
+          />
+          
           <Button
             type="submit"
             fullWidth
@@ -186,10 +235,8 @@ export default withRouter(function AddClient(props) {
             color="primary"
             className={classes.submit}
           >
-            Import Clients (from CSV file)
+            Upload
           </Button>
-        
-        </form>
       </div>
       <Box mt={5}>
         <Copyright />
