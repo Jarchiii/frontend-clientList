@@ -25,6 +25,19 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteClientBtn from "./Buttons/DeleteClientBtn"
 import { NavLink } from "react-router-dom";
+import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+import departementList from '../departementList'
 
 
 
@@ -67,8 +80,8 @@ const headCells = [
   { id: 'genre', numeric : true, disablePadding: false, label: 'Civilité' },
   { id: 'firstname', numeric: true, disablePadding: false, label: 'Prénom' },
   { id: 'lastname', numeric: true, disablePadding: false, label: 'Nom' },
-  { id: 'mail', numeric: true, disablePadding: false, label: 'email' },
-  { id: 'address', numeric: true, disablePadding: false, label: 'address' },
+  { id: 'mail', numeric: true, disablePadding: false, label: 'Email' },
+  { id: 'address', numeric: true, disablePadding: false, label: 'Addresse' },
 ];
 
 function EnhancedTableHead(props) {
@@ -187,6 +200,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClientList({clientsList, handleClients}) {
   const clientsListTab = clientsList
+  console.log("ZAZAZ", clientsListTab)
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -194,6 +208,14 @@ export default function ClientList({clientsList, handleClients}) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  console.log("département list", departementList)
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickList = (e) => {
+    e.preventDefault();
+    setOpen(!open);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -251,6 +273,54 @@ export default function ClientList({clientsList, handleClients}) {
 
   return (
     <div className={classes.root}>
+      <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+          Filtre :
+        </ListSubheader>
+      }
+      className={classes.root}
+    >
+         <ListItem button onClick={handleClickList}>
+        <ListItemText primary="Départements" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+         {departementList.map(departement => (
+         <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              {departement.numero}
+            </ListItemIcon>
+            <ListItemText primary={departement.nom} />
+          </ListItem> ))}
+
+
+
+          {/* <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText primary="Starred" />
+          </ListItem> */}
+        </List>
+      </Collapse>
+    </List>
+
+
+
+
+
+
+
+
+
+
+
+
+
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>

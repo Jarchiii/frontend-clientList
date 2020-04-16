@@ -2,6 +2,8 @@ import React,  {useState, useEffect} from 'react'
 import APIHandler from "../api/APIHandler";
 import ClientsList from "../components/ClientsList";
 
+import AppBar from "../components/AppBar"
+
 
 
 export default function Clients() {
@@ -14,6 +16,8 @@ export default function Clients() {
         address: "blabla",
     },
 ])
+
+
 
 console.log("ici2")
     useEffect(()=> {
@@ -31,6 +35,7 @@ console.log("ici2")
     
     return (
         <div>
+            <AppBar/>
             <div className="fullScreen">
               <ClientsList clientsList={clients} handleClients={setClients}/>
             </div>

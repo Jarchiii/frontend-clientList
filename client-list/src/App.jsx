@@ -32,7 +32,7 @@ function App() {
 
     <div className="App">
       <Switch>
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" component={Signup} />
             <Route path="/signup" component={Signup} />
             <Route path="/signin" component={Signin} />
             <Route exact path="/clients" component={Clients} />

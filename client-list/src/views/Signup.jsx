@@ -24,7 +24,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Jonathan Oreja
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -91,7 +91,7 @@ export default withRouter(function Signup(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Nouveau compte
         </Typography>
         <form className={classes.form} method="post"
           onChange={handleChange} 
@@ -105,7 +105,7 @@ export default withRouter(function Signup(props) {
                 required
                 fullWidth
                 id="firstname"
-                label="First Name"
+                label="Prénom"
                 autoFocus
               />
             </Grid>
@@ -115,7 +115,7 @@ export default withRouter(function Signup(props) {
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Nom de famille"
                 name="lastname"
                 autoComplete="lname"
               />
@@ -126,7 +126,7 @@ export default withRouter(function Signup(props) {
                 required
                 fullWidth
                 id="mail"
-                label="Email Address"
+                label="Email"
                 name="mail"
                 autoComplete="email"
               />
@@ -138,18 +138,13 @@ export default withRouter(function Signup(props) {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Mot de passe"
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
+            
           </Grid>
           <Button
             type="submit"
@@ -158,12 +153,12 @@ export default withRouter(function Signup(props) {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Créer un compte 
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
             <NavLink exact className="link" to="/signin">
-                Already have an account? Sign in
+                Vous avez déja un compte? Se connecter
               </NavLink>
             </Grid>
           </Grid>

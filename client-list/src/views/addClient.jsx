@@ -79,13 +79,29 @@ export default withRouter(function AddClient(props) {
     setUpload(e.target.files[0]);
   }
 
+   
+  const handleFileSubmit = e => {
+    e.preventDefault();
+    const fd = new FormData();
+    fd.append("fileUrl", uploadData);
+    console.log(uploadData)
+    APIHandler
+    .post("/clientsImport", fd)
+    .then(apiRes => {
+      console.log("OK: CLIENT imported... ", apiRes);
+
+    })
+    .catch(apiErr => console.log("GROS FAIL... ", apiErr))
+    };
+  
+
   const handleChange = e => {
     console.log({ [e.target.name] : e.target.value });
     setUser({
       ...user,
       [e.target.name] : e.target.value
     });
-  
+ 
 
     
     console.log(user);
@@ -100,6 +116,8 @@ export default withRouter(function AddClient(props) {
   })
   .catch(apiErr => console.log("GROS FAIL... ", apiErr))
   };
+
+
 
 
  const handleClickAutocomplete = e => {
@@ -215,9 +233,8 @@ export default withRouter(function AddClient(props) {
           >
             Add Client
           </Button>
-          
-        
         </form>
+        <form className={classes.form} method="post" onSubmit={handleFileSubmit} >
         <input
             type="submit"
             fullWidth
@@ -227,7 +244,6 @@ export default withRouter(function AddClient(props) {
             onChange={handleFileUpload}
             className={classes.submit}
           />
-          
           <Button
             type="submit"
             fullWidth
@@ -237,6 +253,7 @@ export default withRouter(function AddClient(props) {
           >
             Upload
           </Button>
+          </form>
       </div>
       <Box mt={5}>
         <Copyright />

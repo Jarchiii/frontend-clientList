@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import APIHandler from "../api/APIHandler";
 import UserContext from "../api/UserContext";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -87,7 +88,7 @@ export default function SignInSide(props) {
     APIHandler.post("/signin", user)
       .then(apiRes => {
         setCurrentUser(apiRes.data.currentUser);
-        props.history.push("/");
+        props.history.push("/clients");
       }) 
       .catch(apiErr => console.log("GROS FAIL... ", apiErr));
     console.log(user);
@@ -103,7 +104,7 @@ export default function SignInSide(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Connexion
           </Typography>
           <form className={classes.form} method="post"
           onChange={handleChange} 
@@ -114,7 +115,7 @@ export default function SignInSide(props) {
               required
               fullWidth
               id="mail"
-              label="Email Address"
+              label="Email"
               name="mail"
               autoComplete="email"
               autoFocus
@@ -125,14 +126,14 @@ export default function SignInSide(props) {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Mot de passe"
               type="password"
               id="password"
               autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Se souvenir de moi"
             />
             <Button
               type="submit"
@@ -141,18 +142,18 @@ export default function SignInSide(props) {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Se connecter
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  Mot de passe oublié?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <NavLink exact className="link" to="/signin">
+                  Vous n'avez pas de compte ? Créez en un.
+                </NavLink>
               </Grid>
             </Grid>
             <Box mt={5}>
