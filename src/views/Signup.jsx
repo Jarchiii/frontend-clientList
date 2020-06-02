@@ -17,21 +17,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import APIHandler from "../api/APIHandler";
 import { NavLink } from "react-router-dom";
+import Copyright from "../components/Copyright"
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Jonathan Oreja
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
+//CSS
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -52,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//Function
 export default withRouter(function Signup(props) {
   const classes = useStyles();
   const [user, setUser] = useState({

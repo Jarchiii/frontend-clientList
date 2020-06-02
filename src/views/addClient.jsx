@@ -24,20 +24,11 @@ import AddIcon from '@material-ui/icons/Add';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import Axios from 'axios'
+import Copyright from "../components/Copyright"
+import FileReader from "../components/FileReader"
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -84,7 +75,13 @@ export default withRouter(function AddClient(props) {
     e.preventDefault();
     const fd = new FormData();
     fd.append("fileUrl", uploadData);
-    console.log(uploadData)
+    console.log("les data" , uploadData)
+    const fs = require('fs')
+
+    let fichier = fs.readFile(uploadData, function(err, obj) {
+      console.dir(obj)
+    })
+    console.log("le fichier",uploadData )
     APIHandler
     .post("/clientsImport", fd)
     .then(apiRes => {
@@ -254,6 +251,7 @@ export default withRouter(function AddClient(props) {
             Upload
           </Button>
           </form>
+          <FileReader/>
       </div>
       <Box mt={5}>
         <Copyright />
