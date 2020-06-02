@@ -2,11 +2,9 @@ import React from 'react'
 import APIHandler from '../../api/APIHandler'
 
 function DeleteClientBtn({clientToDelete, handleClients}) {
-    console.log("handleclient",handleClients)
 
     const handleSubmit = async evt => {
         evt.preventDefault();
-        console.log(clientToDelete)
         try {
           const apiRes = await APIHandler.delete(
             `/clients/${clientToDelete._id}`

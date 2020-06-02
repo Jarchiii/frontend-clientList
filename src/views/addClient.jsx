@@ -70,27 +70,6 @@ export default withRouter(function AddClient(props) {
     setUpload(e.target.files[0]);
   }
 
-   
-  const handleFileSubmit = e => {
-    e.preventDefault();
-    const fd = new FormData();
-    fd.append("fileUrl", uploadData);
-    console.log("les data" , uploadData)
-    const fs = require('fs')
-
-    let fichier = fs.readFile(uploadData, function(err, obj) {
-      console.dir(obj)
-    })
-    console.log("le fichier",uploadData )
-    APIHandler
-    .post("/clientsImport", fd)
-    .then(apiRes => {
-      console.log("OK: CLIENT imported... ", apiRes);
-
-    })
-    .catch(apiErr => console.log("GROS FAIL... ", apiErr))
-    };
-  
 
   const handleChange = e => {
     console.log({ [e.target.name] : e.target.value });
@@ -231,26 +210,6 @@ export default withRouter(function AddClient(props) {
             Add Client
           </Button>
         </form>
-        <form className={classes.form} method="post" onSubmit={handleFileSubmit} >
-        <input
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            type="file"
-            onChange={handleFileUpload}
-            className={classes.submit}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Upload
-          </Button>
-          </form>
           <FileReader/>
       </div>
       <Box mt={5}>

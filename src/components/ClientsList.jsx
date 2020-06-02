@@ -200,7 +200,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClientList({clientsList, handleClients}) {
   const clientsListTab = clientsList
-  console.log("ZAZAZ", clientsListTab)
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -209,7 +208,6 @@ export default function ClientList({clientsList, handleClients}) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  console.log("département list", departementList)
   const [open, setOpen] = React.useState(false);
 
   const handleClickList = (e) => {
